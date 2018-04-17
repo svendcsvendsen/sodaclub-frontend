@@ -1,36 +1,35 @@
 import React, { Component } from 'react';
-import { Grid, Navbar, Jumbotron, Button, Alert } from 'react-bootstrap';
+import { Grid, Navbar, NavItem, Nav, Row, Alert, Button, ButtonToolbar } from 'react-bootstrap';
 
 class App extends Component {
   render() {
     return (
-      <div>
-        <Navbar fixedTop>
-          <Grid>
-            <Navbar.Header>
-              <Navbar.Brand>
-                <a href="/">React App</a>
-              </Navbar.Brand>
-              <Navbar.Toggle />
-            </Navbar.Header>
-          </Grid>
-        </Navbar>
-        <Jumbotron>
-          <Grid>
-            <h1>Welcome to React</h1>
-            <p>
-              <Alert>Test alert</Alert>
-              <Button
-                bsStyle="success"
-                bsSize="large"
-                href="http://react-bootstrap.github.io/components.html"
-                target="_blank">
-                View React Bootstrap Docs
-              </Button>
-            </p>
-          </Grid>
-        </Jumbotron>
-      </div>
+        <div>
+            <Navbar>
+                <Navbar.Header>
+                    <Navbar.Brand>
+                        <a href="#home">Sodaclub</a>
+                    </Navbar.Brand>
+                </Navbar.Header>
+                <Nav>
+                    <NavItem eventKey={1} href="#">Home</NavItem>
+                    <NavItem eventKey={1} href="#">Info</NavItem>
+                    <NavItem eventKey={1} href="#">Profile</NavItem>
+                    <NavItem eventKey={1} href="#">Admin</NavItem>
+                    <NavItem eventKey={1} href="#">Logout</NavItem>
+                </Nav>
+            </Navbar>
+            <Grid>
+                <Row>
+                    <Alert>This is some info</Alert>
+                    <h2>Your current balance is 100 DKK</h2>
+                    <ButtonToolbar>
+                    <Button>Soda (2 DKK)</Button>
+                    <Button>Candybar (3 DKK)</Button>
+                    </ButtonToolbar>
+                </Row>
+            </Grid>
+        </div>
     );
   }
 }
