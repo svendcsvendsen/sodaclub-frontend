@@ -1,35 +1,33 @@
 import React, { Component } from 'react';
-import { Grid, Navbar, NavItem, Nav, Row, Alert, Button, ButtonToolbar } from 'react-bootstrap';
+import { Navbar, NavItem, Nav } from 'react-bootstrap';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Home from './Home';
+import Info from './Info';
 
 class App extends Component {
   render() {
     return (
-        <div>
-            <Navbar>
-                <Navbar.Header>
-                    <Navbar.Brand>
-                        <a href="#home">Sodaclub</a>
-                    </Navbar.Brand>
-                </Navbar.Header>
-                <Nav>
-                    <NavItem eventKey={1} href="#">Home</NavItem>
-                    <NavItem eventKey={1} href="#">Info</NavItem>
-                    <NavItem eventKey={1} href="#">Profile</NavItem>
-                    <NavItem eventKey={1} href="#">Admin</NavItem>
-                    <NavItem eventKey={1} href="#">Logout</NavItem>
-                </Nav>
-            </Navbar>
-            <Grid>
-                <Row>
-                    <Alert>This is some info</Alert>
-                    <h2>Your current balance is 100 DKK</h2>
-                    <ButtonToolbar>
-                    <Button>Soda (2 DKK)</Button>
-                    <Button>Candybar (3 DKK)</Button>
-                    </ButtonToolbar>
-                </Row>
-            </Grid>
-        </div>
+            <Router><div>
+                <Navbar>
+                    <Navbar.Header>
+                        <Navbar.Brand>
+                            <a href="#home">Sodaclub</a>
+                        </Navbar.Brand>
+                    </Navbar.Header>
+                    <Nav>
+                        <NavItem eventKey={1} href="/">Home</NavItem>
+                        <NavItem eventKey={1} href="/info">Info</NavItem>
+                        <NavItem eventKey={1} href="/profile">Profile</NavItem>
+                        <NavItem eventKey={1} href="/admin">Admin</NavItem>
+                        <NavItem eventKey={1} href="#">Logout</NavItem>
+                    </Nav>
+                </Navbar>
+
+                <Route exact path="/" component={Home} />
+                <Route exact path="/info" component={Info} />
+                <Route exact path="/profile" component={Info} />
+                <Route exact path="/admin" component={Info} />
+            </div></Router>
     );
   }
 }
