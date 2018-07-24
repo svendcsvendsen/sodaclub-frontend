@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { Grid, Row, Alert, Button, ButtonToolbar } from 'react-bootstrap';
 
-class Home extends Component {
+class Purchase extends Component {
   render() {
     return (
         <Grid>
             <Row>
                 <Alert>This is some info</Alert>
-                <h2>Your current balance is 100 DKK</h2>
+                <h2>Your current balance is 100¤</h2>
                 <ButtonToolbar>
-                <Button>Soda (2 DKK)</Button>
-                <Button>Candybar (3 DKK)</Button>
+                <Button>Soda (2¤)</Button>
+                <Button>Sun Lolly (3¤)</Button>
                 </ButtonToolbar>
             </Row>
         </Grid>
@@ -18,4 +18,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default Purchase;
