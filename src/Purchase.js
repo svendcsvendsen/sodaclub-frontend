@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Grid, Row, Button, ButtonToolbar } from 'react-bootstrap';
+import { Grid, Row, ButtonToolbar } from 'react-bootstrap';
 import Backend from './models/backend'
+import PurchaseButton from './PurchaseButton';
 
 class Purchase extends Component {
     constructor(props, context) {
@@ -17,7 +18,7 @@ class Purchase extends Component {
 
     render() {
         const items = this.state.items.map((item) =>
-            <Button key={item.id}>{item.name} ({item.price}¤)</Button>
+            <PurchaseButton key={item.id} name={item.name} price={item.price}/>
         );
 
         return (
