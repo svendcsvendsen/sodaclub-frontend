@@ -6,7 +6,7 @@ class PurchaseButton extends Component {
     constructor(props, context) {
         super(props, context);
 
-        this.state = {show_confirmation : false, show_success : false, is_loading : false, show_failure : false, };
+        this.state = {show_confirmation : false, show_success : false, is_loading : false, show_failure : false, balance: Backend.getBalance()};
         this.handleClick = this.handleClick.bind(this);
         this.handlePurchase = this.handlePurchase.bind(this);
         this.handleConfirmationClose = this.handleConfirmationClose.bind(this);
@@ -20,6 +20,11 @@ class PurchaseButton extends Component {
         this.state.is_loading = false;
         this.state.show_confirmation = false;
         this.state.show_success = true;
+        this.setState(this.state);
+    }
+
+    handleBackendChange() {
+        this.state.balance = Backend.getBalance();
         this.setState(this.state);
     }
 
@@ -60,7 +65,7 @@ class PurchaseButton extends Component {
     render() {
         return (
             <div>
-                <Button onClick={this.handleClick}>{this.props.item.name} ({this.props.item.price}¤)</Button>
+                <Button disabled={this.state.balance < this.props.item.price} onClick={this.handleClick}>{this.props.item.name} ({this.props.item.price}¤)</Button>
                 <Modal show={this.state.show_confirmation} onHide={this.handleConfirmationClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>Confirm your purchase</Modal.Title>
