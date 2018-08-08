@@ -13,6 +13,11 @@ class App extends Component {
         super(props, context);
 
         this.handleLogoutClick = this.handleLogoutClick.bind(this);
+        this.handleBackendChange = this.handleBackendChange.bind(this);
+
+        Backend.subscribe(this.handleBackendChange);
+        var balance = (Backend.isAuthenticated() ? Backend.getBalance() : null);
+        this.state = {is_authenticated: Backend.isAuthenticated(), balance: balance};
     }
 
     handleLogoutClick(e) {
@@ -20,6 +25,11 @@ class App extends Component {
             this.setState(this.state);
             console.log('logout');
         });
+    }
+
+    handleBackendChange() {
+        var balance = (Backend.isAuthenticated() ? Backend.getBalance() : null);
+        this.setState({authenticated: Backend.isAuthenticated(), balance: balance});
     }
 
     render() {
@@ -33,12 +43,12 @@ class App extends Component {
                     </Navbar.Header>
                     <Nav>
                         <NavItem eventKey={1} href="/">Info</NavItem>
-                        { !Backend.isAuthenticated() && <NavItem eventKey={1} href="/login">Login</NavItem>}
-                        { Backend.isAuthenticated() && <NavItem eventKey={1} href="/purchase">Purchase</NavItem> }
-                        { Backend.isAuthenticated() && <NavItem eventKey={1} onClick={this.handleLogoutClick}>Logout</NavItem> }
+                        { !this.state.is_authenticated && <NavItem eventKey={1} href="/login">Login</NavItem>}
+                        { this.state.is_authenticated && <NavItem eventKey={1} href="/purchase">Purchase</NavItem> }
+                        { this.state.is_authenticated && <NavItem eventKey={1} onClick={this.handleLogoutClick}>Logout</NavItem> }
                     </Nav>
 
-                    { Backend.isAuthenticated() && <Navbar.Text pullRight>Balance: {Backend.getBalance()}¤</Navbar.Text> }
+                    { this.state.balance !== null && <Navbar.Text pullRight>Balance: {this.state.balance}¤</Navbar.Text> }
                 </Navbar>
 
                 <Route exact path="/" component={Info} />

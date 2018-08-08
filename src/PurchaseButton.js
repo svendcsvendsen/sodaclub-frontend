@@ -17,7 +17,7 @@ class PurchaseButton extends Component {
     }
 
     handleSuccessEvent() {
-        this.state.is_loading = true;
+        this.state.is_loading = false;
         this.state.show_confirmation = false;
         this.state.show_success = true;
         this.setState(this.state);

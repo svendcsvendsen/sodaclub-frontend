@@ -1,5 +1,7 @@
 const BASE_URL = '/api';
 
+var subscribers = []
+
 class Backend {
     static isAuthenticated() {
         return localStorage.getItem("token") !== ""
@@ -20,6 +22,7 @@ class Backend {
                 localStorage.setItem("token", data.token);
                 localStorage.setItem("balance", data.balance);
                 success();
+                this.publish();
                 return;
             });
         }).catch((err) => {
@@ -31,6 +34,7 @@ class Backend {
         localStorage.setItem("token", "")
         localStorage.setItem("balance", "")
         success();
+        this.publish();
     }
 
     static reset_password(user_id, reset_key, password, success, failure) {
@@ -48,6 +52,7 @@ class Backend {
                 localStorage.setItem("token", data.token);
                 localStorage.setItem("balance", data.balance);
                 success();
+                this.publish();
                 return;
             });
         }).catch((err) => {
@@ -58,6 +63,20 @@ class Backend {
 
     static getBalance() {
         return localStorage.getItem("balance")
+    }
+
+    static publish() {
+        console.log('Calling subscribers')
+        for (var subscriber of subscribers) {
+            console.log('Calling subscriber')
+            subscriber();
+        }
+        console.log('Done')
+    }
+
+    static subscribe(subscriber) {
+        console.log('Someone subscribes')
+        subscribers.push(subscriber)
     }
 
     static getItems(success, failure) {
@@ -89,6 +108,7 @@ class Backend {
             response.json().then((data) => {
                 localStorage.setItem("balance", data.balance)
                 success();
+                this.publish();
                 return;
             });
         }).catch((err) => {
