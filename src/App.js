@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Purchase from './Purchase';
 import Info from './Info';
 import Login from './Login';
+import PasswordReset from './PasswordReset';
 import PrivateRoute from './PrivateRoute';
 import Backend from './models/backend'
 
@@ -42,6 +43,7 @@ class App extends Component {
 
                 <Route exact path="/" component={Info} />
                 <Route exact path="/login" component={Login} />
+                <Route path="/password-reset/:user_id/:reset_key" component={PasswordReset} />
                 <PrivateRoute exact path="/purchase" component={Purchase} />
             </div></Router>
         );

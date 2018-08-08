@@ -18,7 +18,7 @@ class Purchase extends Component {
 
     render() {
         const items = this.state.items.map((item) =>
-            <PurchaseButton key={item.id} name={item.name} price={item.price}/>
+            <PurchaseButton key={item.id} item={item} />
         );
 
         return (
