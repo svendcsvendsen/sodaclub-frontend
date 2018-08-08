@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Row, FormGroup, ControlLabel, FormControl, Button} from 'react-bootstrap';
+import { Grid, Row, FormGroup, ControlLabel, FormControl, Button, Modal} from 'react-bootstrap';
 import { Redirect } from "react-router-dom";
 import Backend from './models/backend'
 
@@ -9,12 +9,18 @@ class Login extends Component {
 
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleRepeatPasswordChange = this.handleRepeatPasswordChange.bind(this);
+        this.handleFailureClose = this.handleFailureClose.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.state = { user: '', password: '', repeat_password: '', redirect: false };
+        this.state = { user: '', password: '', repeat_password: '', redirect: false, show_failure: false };
     }
 
     handlePasswordChange(e) {
         this.state.password = e.target.value;
+        this.setState(this.state);
+    }
+
+    handleFailureClose(e) {
+        this.state.show_failure = false;
         this.setState(this.state);
     }
 
@@ -31,7 +37,8 @@ class Login extends Component {
             this.state.redirect = true;
             this.setState(this.state);
         }, () => {
-            console.log("Failed to reset")
+            this.state.show_failure = true;
+            this.setState(this.state);
         });
     }
 
@@ -69,6 +76,17 @@ class Login extends Component {
                         </FormGroup>
                         <Button bsStyle="primary" disabled={!this.validPassword()} type="submit">Submit</Button>
                     </form>
+                    <Modal show={this.state.show_failure} onHide={this.handleFailureClose}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Password reset failed</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <p>Password reset failed.</p>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button onClick={this.handleFailureClose}>Close</Button>
+                        </Modal.Footer>
+                    </Modal>
                 </Row>
             </Grid>
         );

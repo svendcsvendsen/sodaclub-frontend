@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Row, FormGroup, ControlLabel, FormControl, Button} from 'react-bootstrap';
+import { Grid, Row, FormGroup, ControlLabel, FormControl, Button, Modal} from 'react-bootstrap';
 import { Redirect } from "react-router-dom";
 import Backend from './models/backend'
 
@@ -10,7 +10,8 @@ class Login extends Component {
         this.handleEmailChange = this.handleEmailChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.state = { user: '', password: '', redirect: false };
+        this.handleFailureClose = this.handleFailureClose.bind(this);
+        this.state = { user: '', password: '', redirect: false, show_failure: false };
     }
 
     handleEmailChange(e) {
@@ -23,13 +24,19 @@ class Login extends Component {
         this.setState(this.state);
     }
 
+    handleFailureClose(e) {
+        this.state.show_failure = false;
+        this.setState(this.state);
+    }
+
     handleSubmit(e) {
         e.preventDefault();
         Backend.authenticate(this.state.user, this.state.password, () => {
             this.state.redirect = true;
             this.setState(this.state);
         }, () => {
-            console.log("Failed login")
+            this.state.show_failure = true;
+            this.setState(this.state);
         });
     }
 
@@ -63,6 +70,17 @@ class Login extends Component {
                         </FormGroup>
                         <Button bsStyle="primary" type="submit">Submit</Button>
                     </form>
+                    <Modal show={this.state.show_failure} onHide={this.handleFailureClose}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Login failed</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <p>Login failed.</p>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button onClick={this.handleFailureClose}>Close</Button>
+                        </Modal.Footer>
+                    </Modal>
                 </Row>
             </Grid>
         );
