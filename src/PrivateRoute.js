@@ -1,14 +1,30 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Route, Redirect } from "react-router-dom";
+import { connect } from 'react-redux';
 
-import Backend from './models/backend'
+// const PrivateRoute = ({ component: Component, ...rest }) => (
+//   <Route {...rest} render={(props) => (
+//     props.token !== null
+//       ? <Component {...props} />
+//       : <Redirect to='/login' />
+//   )} />
+// )
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
-  <Route {...rest} render={(props) => (
-    Backend.isAuthenticated() === true
-      ? <Component {...props} />
-      : <Redirect to={{pathname:'/login', state: { from: props.location}}} />
-  )} />
-)
+const mapStateToProps = (state) => {
+    return {
+        token: state.token,
+    };
+};
 
-export default PrivateRoute
+const PrivateRoute = ({ component: Component, token, ...rest }) => (
+  <Route
+    {...rest}
+    render={props => (
+      token !== null
+        ? <Component {...props} />
+        : <Redirect to="/login" />
+    )}
+  />
+);
+
+export default connect(mapStateToProps)(PrivateRoute);

@@ -1,7 +1,23 @@
 import React, { Component } from 'react';
-import { Grid, Row, FormGroup, ControlLabel, FormControl, Button, Modal} from 'react-bootstrap';
+import { Grid, Row, FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
 import { Redirect } from "react-router-dom";
-import Backend from './models/backend'
+
+import { connect } from 'react-redux';
+import { login } from './actions/authentication';
+
+const mapStateToProps = (state) => {
+    return {
+        loginPending: state.loginPending,
+        loginError: state.loginError,
+        token: state.token,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        login: (email, password) => dispatch(login(email, password)),
+    };
+};
 
 class Login extends Component {
     constructor(props, context) {
@@ -10,46 +26,39 @@ class Login extends Component {
         this.handleEmailChange = this.handleEmailChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleFailureClose = this.handleFailureClose.bind(this);
-        this.state = { user: '', password: '', redirect: false, show_failure: false };
+        this.state = { email: '', password: '' };
     }
 
     handleEmailChange(e) {
-        this.setState({ ...this.state, user: e.target.value });
+        this.setState({ ...this.state, email: e.target.value });
     }
 
     handlePasswordChange(e) {
         this.setState({ ...this.state, password: e.target.value });
     }
 
-    handleFailureClose(e) {
-        this.setState({ ...this.state, show_failure: false });
-    }
-
     handleSubmit(e) {
         e.preventDefault();
-        Backend.authenticate(this.state.user, this.state.password, () => {
-            this.setState({ ...this.state, redirect: true });
-        }, () => {
-            this.setState({ ...this.state, show_failure: true });
-        });
+
+        this.props.login(this.state.email, this.state.password);
     }
 
     render() {
-        if (this.state.redirect) {
-            const { from } = this.props.location.state || { from: { pathname: '/purchase' } }
-            return (<Redirect to={from}/>);
+        if (this.props.token !== null) {
+            return (<Redirect to='/purchase'/>);
         }
 
         return (
             <Grid>
                 <Row>
+                    <h2>Login</h2>
+                    { this.props.loginError !== null && <p>{this.props.loginError}</p> }
                     <form onSubmit={this.handleSubmit}>
                         <FormGroup controlId="form-email">
                             <ControlLabel>Email</ControlLabel>
                             <FormControl
                                 type="text"
-                                value={this.state.user}
+                                value={this.state.email}
                                 placeholder="Enter email"
                                 onChange={this.handleEmailChange}
                             />
@@ -63,23 +72,12 @@ class Login extends Component {
                                 onChange={this.handlePasswordChange}
                             />
                         </FormGroup>
-                        <Button bsStyle="primary" type="submit">Submit</Button>
+                        <Button bsStyle="primary" type="submit" disabled={this.props.loginPending}>Submit</Button>
                     </form>
-                    <Modal show={this.state.show_failure} onHide={this.handleFailureClose}>
-                        <Modal.Header closeButton>
-                            <Modal.Title>Login failed</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <p>Login failed.</p>
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button onClick={this.handleFailureClose}>Close</Button>
-                        </Modal.Footer>
-                    </Modal>
                 </Row>
             </Grid>
         );
   }
 }
 
-export default Login;
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

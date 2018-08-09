@@ -6,7 +6,8 @@ class Info extends Component {
     return (
         <Grid>
             <Row>
-                <h2>This is some info</h2>
+                <h2>Madalgo Soda Club</h2>
+                <p>Lorem ipsum</p>
             </Row>
         </Grid>
     );

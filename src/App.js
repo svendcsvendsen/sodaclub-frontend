@@ -6,33 +6,29 @@ import Info from './Info';
 import Login from './Login';
 import PasswordReset from './PasswordReset';
 import PrivateRoute from './PrivateRoute';
-import Backend from './models/backend'
+import LogoutButton from './LogoutButton';
+import { connect } from 'react-redux';
+
+const mapStateToProps = (state) => {
+    return {
+        balance: state.balance,
+        tokenVerificationPending: state.tokenVerificationPending,
+    };
+};
 
 class App extends Component {
-    constructor(props, context) {
-        super(props, context);
+    // constructor(props, context) {
+    //     super(props, context);
+    // }
 
-        this.handleLogoutClick = this.handleLogoutClick.bind(this);
-        this.handleBackendChange = this.handleBackendChange.bind(this);
-
-        Backend.subscribe(this.handleBackendChange);
-        var balance = (Backend.isAuthenticated() ? Backend.getBalance() : null);
-        this.state = {is_authenticated: Backend.isAuthenticated(), balance: balance};
-    }
-
-    handleLogoutClick(e) {
-        Backend.signout(() => {
-            this.setState(this.state);
-            console.log('logout');
-        });
-    }
-
-    handleBackendChange() {
-        var balance = (Backend.isAuthenticated() ? Backend.getBalance() : null);
-        this.setState({authenticated: Backend.isAuthenticated(), balance: balance});
+    isAuthenticated() {
+        return this.props.balance !== null;
     }
 
     render() {
+        if (this.props.tokenVerificationPending)
+            return (<p>Rehydrating store...</p>);
+
         return (
             <Router><div>
                 <Navbar>
@@ -42,22 +38,23 @@ class App extends Component {
                         </Navbar.Brand>
                     </Navbar.Header>
                     <Nav>
-                        <NavItem eventKey={1} href="/">Info</NavItem>
-                        { !this.state.is_authenticated && <NavItem eventKey={1} href="/login">Login</NavItem>}
-                        { this.state.is_authenticated && <NavItem eventKey={1} href="/purchase">Purchase</NavItem> }
-                        { this.state.is_authenticated && <NavItem eventKey={1} onClick={this.handleLogoutClick}>Logout</NavItem> }
+                        <NavItem href="/">Info</NavItem>
+                        { !this.isAuthenticated() && <NavItem href="/login">Login</NavItem>}
+                        { this.isAuthenticated() && <NavItem href="/purchase">Purchase</NavItem> }
+                        { this.isAuthenticated() && <LogoutButton /> }
                     </Nav>
 
-                    { this.state.balance !== null && <Navbar.Text pullRight>Balance: {this.state.balance}¤</Navbar.Text> }
+                    { this.isAuthenticated() && <Navbar.Text pullRight>Balance: {this.props.balance}¤</Navbar.Text> }
                 </Navbar>
 
                 <Route exact path="/" component={Info} />
                 <Route exact path="/login" component={Login} />
-                <Route path="/password-reset/:user_id/:reset_key" component={PasswordReset} />
                 <PrivateRoute exact path="/purchase" component={Purchase} />
+                <Route path="/password-reset/:user_id/:reset_key" component={PasswordReset} />
             </div></Router>
         );
+
     }
 }
 
-export default App;
+export default connect(mapStateToProps)(App);
