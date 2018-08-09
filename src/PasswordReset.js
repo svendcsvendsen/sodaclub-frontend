@@ -15,18 +15,15 @@ class Login extends Component {
     }
 
     handlePasswordChange(e) {
-        this.state.password = e.target.value;
-        this.setState(this.state);
+        this.setState({ ...this.state, password: e.target.value });
     }
 
     handleFailureClose(e) {
-        this.state.show_failure = false;
-        this.setState(this.state);
+        this.setState({ ...this.state, show_failure: false });
     }
 
     handleRepeatPasswordChange(e) {
-        this.state.repeat_password = e.target.value;
-        this.setState(this.state);
+        this.setState({ ...this.state, repeat_password: e.target.value });
     }
 
     handleSubmit(e) {
@@ -34,11 +31,9 @@ class Login extends Component {
         var user_id = this.props.match.params.user_id
         var reset_key = this.props.match.params.reset_key
         Backend.reset_password(user_id, reset_key, this.state.password, () => {
-            this.state.redirect = true;
-            this.setState(this.state);
+            this.setState({ ...this.state, redirect: true });
         }, () => {
-            this.state.show_failure = true;
-            this.setState(this.state);
+            this.setState({ ...this.state, show_failure: true });
         });
     }
 

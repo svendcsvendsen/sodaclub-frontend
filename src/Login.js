@@ -15,28 +15,23 @@ class Login extends Component {
     }
 
     handleEmailChange(e) {
-        this.state.user = e.target.value;
-        this.setState(this.state);
+        this.setState({ ...this.state, user: e.target.value });
     }
 
     handlePasswordChange(e) {
-        this.state.password = e.target.value;
-        this.setState(this.state);
+        this.setState({ ...this.state, password: e.target.value });
     }
 
     handleFailureClose(e) {
-        this.state.show_failure = false;
-        this.setState(this.state);
+        this.setState({ ...this.state, show_failure: false });
     }
 
     handleSubmit(e) {
         e.preventDefault();
         Backend.authenticate(this.state.user, this.state.password, () => {
-            this.state.redirect = true;
-            this.setState(this.state);
+            this.setState({ ...this.state, redirect: true });
         }, () => {
-            this.state.show_failure = true;
-            this.setState(this.state);
+            this.setState({ ...this.state, show_failure: true });
         });
     }
 

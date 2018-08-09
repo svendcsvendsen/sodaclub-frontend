@@ -17,49 +17,36 @@ class PurchaseButton extends Component {
     }
 
     handleSuccessEvent() {
-        this.state.is_loading = false;
-        this.state.show_confirmation = false;
-        this.state.show_success = true;
-        this.setState(this.state);
+        this.setState({ ...this.state, is_loading: false, show_confirmation: false, show_success: true });
     }
 
     handleBackendChange() {
-        this.state.balance = Backend.getBalance();
-        this.setState(this.state);
+        this.setState({ ...this.state, balance: Backend.getBalance() });
     }
 
     handleFailureEvent() {
-        this.state.is_loading = false;
-        this.state.show_confirmation = false;
-        this.state.show_failure = true;
-        this.setState(this.state);
+        this.setState({ ...this.state, is_loading: false, show_confirmation: false, show_failure: true });
     }
 
     handleClick(e) {
-        this.state.show_confirmation = true;
-        this.setState(this.state);
+        this.setState({ ...this.state, show_confirmation: true });
     }
 
     handlePurchase(e) {
-        // this.state.show_confirmation = false;
-        this.state.is_loading = true;
-        this.setState(this.state);
+        this.setState({ ...this.state, is_loading: true });
         Backend.purchase(this.props.item.id, this.handleSuccessEvent, this.handleFailureEvent);
     }
 
     handleConfirmationClose(e) {
-        this.state.show_confirmation = false;
-        this.setState(this.state);
+        this.setState({ ...this.state, show_confirmation: false });
     }
 
     handleSuccessClose(e) {
-        this.state.show_success = false;
-        this.setState(this.state);
+        this.setState({ ...this.state, show_success: false });
     }
 
     handleFailureClose(e) {
-        this.state.show_failure = false;
-        this.setState(this.state);
+        this.setState({ ...this.state, show_failure: false });
     }
 
     render() {

@@ -9,8 +9,7 @@ class Purchase extends Component {
 
         this.state = {items : []};
         Backend.getItems((items) => {
-            this.state.items = items;
-            this.setState(this.state);
+            this.setState({ ...this.state, items: items });
         }, () => {
             // failure 
         });
