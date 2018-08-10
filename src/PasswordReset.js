@@ -51,7 +51,7 @@ class PasswordReset extends Component {
 
     render() {
         if (this.props.token !== null) {
-            return (<Redirect to='/purchase'/>);
+            return (<Redirect to='/'/>);
         }
 
         return (
