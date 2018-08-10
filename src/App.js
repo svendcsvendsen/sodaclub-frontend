@@ -30,7 +30,7 @@ class App extends Component {
             return (<p>Rehydrating store...</p>);
 
         return (
-            <Router><div>
+            <Router basename='/sodaclub'><div>
                 <Navbar>
                     <Navbar.Header>
                         <Navbar.Brand>
@@ -38,9 +38,9 @@ class App extends Component {
                         </Navbar.Brand>
                     </Navbar.Header>
                     <Nav>
-                        <NavItem href="/">Info</NavItem>
-                        { !this.isAuthenticated() && <NavItem href="/login">Login</NavItem>}
-                        { this.isAuthenticated() && <NavItem href="/purchase">Purchase</NavItem> }
+                        <NavItem href="/sodaclub">Info</NavItem>
+                        { !this.isAuthenticated() && <NavItem href="/sodaclub/login">Login</NavItem>}
+                        { this.isAuthenticated() && <NavItem href="/sodaclub/purchase">Purchase</NavItem> }
                         { this.isAuthenticated() && <LogoutButton /> }
                     </Nav>
 
