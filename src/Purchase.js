@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Grid, Row, ButtonToolbar, Button, Modal } from 'react-bootstrap';
-import PurchaseButton from './PurchaseButton';
+import PurchaseItem from './PurchaseItem';
 
 import { connect } from 'react-redux';
 import { fetchItems } from './actions/items';
@@ -50,15 +50,13 @@ class Purchase extends Component {
     }
 
     render() {
-        const items = this.props.items.map((item) =>
-            <PurchaseButton key={item.id} item={item} />
-        );
+        const items = this.props.items.map((item) => <PurchaseItem key={item.id} item={item} />);
 
         return (
             <Grid>
                 <Row>
                     <h2>Purchase Items</h2>
-                    <ButtonToolbar>{items}</ButtonToolbar>
+                    {items}
                 </Row>
                 <Modal show={this.props.purchaseDialogId !== null} onHide={this.handleModalHide}>
                     <Modal.Header closeButton>

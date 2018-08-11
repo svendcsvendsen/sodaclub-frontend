@@ -17,7 +17,7 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-class PurchaseButton extends Component {
+class PurchaseItem extends Component {
     constructor(props, context) {
         super(props, context);
 
@@ -29,8 +29,13 @@ class PurchaseButton extends Component {
     }
 
     render() {
-        return (<Button disabled={this.props.balance < this.props.item.price} onClick={this.handleClick}>{this.props.item.name} ({this.props.item.price}¤)</Button>);
+        return (
+            <div>
+                <h3>{this.props.item.name}</h3>
+                <Button disabled={this.props.balance < this.props.item.price} onClick={this.handleClick}>Purchase ({this.props.item.price}¤)</Button>
+                <hr/>
+            </div>);
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PurchaseButton);
+export default connect(mapStateToProps, mapDispatchToProps)(PurchaseItem);
