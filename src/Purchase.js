@@ -57,7 +57,7 @@ class Purchase extends Component {
         return (
             <Grid>
                 <Row>
-                    <h1>Purchase Items</h1>
+                    <h2>Purchase Items</h2>
                     <ButtonToolbar>{items}</ButtonToolbar>
                 </Row>
                 <Modal show={this.props.purchaseDialogId !== null} onHide={this.handleModalHide}>

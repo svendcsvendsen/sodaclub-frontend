@@ -51,7 +51,7 @@ class Login extends Component {
         return (
             <Grid>
                 <Row>
-                    <h2>Login</h2>
+                    <h1>Login</h1>
                     { this.props.loginError !== null && <p>{this.props.loginError}</p> }
                     <form onSubmit={this.handleSubmit}>
                         <FormGroup controlId="form-email">

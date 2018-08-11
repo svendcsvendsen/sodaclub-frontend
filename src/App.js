@@ -34,7 +34,7 @@ class App extends Component {
                 <Navbar>
                     <Navbar.Header>
                         <Navbar.Brand>
-                            <a href="#home">Sodaclub</a>
+                            <a href="/">Sodaclub</a>
                         </Navbar.Brand>
                     </Navbar.Header>
                     <Nav>
