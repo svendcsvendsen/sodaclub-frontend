@@ -32,7 +32,7 @@ class PurchaseItem extends Component {
         return (
             <div>
                 <h3>{this.props.item.name}</h3>
-                <Button disabled={this.props.balance < this.props.item.price} onClick={this.handleClick}>Purchase ({this.props.item.price}¤)</Button>
+                <Button disabled={this.props.balance < this.props.item.price} onClick={this.handleClick}>Purchase ({this.props.item.price/100} DKK)</Button>
                 <hr/>
             </div>);
     }

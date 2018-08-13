@@ -63,7 +63,7 @@ class Purchase extends Component {
                         <Modal.Title>Confirm your purchase</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <p>Do you want to purchase one {this.props.item !== null ? this.props.item.name : null} for {this.props.item !== null ? this.props.item.price : null}¤?</p>
+                        <p>Do you want to purchase one {this.props.item !== null ? this.props.item.name : null} for {this.props.item !== null ? this.props.item.price/100 : null} DKK?</p>
                     </Modal.Body>
                     <Modal.Footer>
                         <Button onClick={this.handleModalHide}>Close</Button>

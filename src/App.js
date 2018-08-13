@@ -44,7 +44,7 @@ class App extends Component {
                         { this.isAuthenticated() && <LogoutButton /> }
                     </Nav>
 
-                    { this.isAuthenticated() && <Navbar.Text pullRight>Balance: {this.props.balance}¤</Navbar.Text> }
+                    { this.isAuthenticated() && <Navbar.Text pullRight>Balance: {this.props.balance/100}DKK</Navbar.Text> }
                 </Navbar>
 
                 <Route exact path="/" component={Info} />
