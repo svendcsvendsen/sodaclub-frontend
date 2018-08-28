@@ -8,7 +8,7 @@ import { purchase, hidePurchaseDialog } from './actions/purchase';
 
 const mapStateToProps = (state) => {
     return {
-        items: state.items,
+        items: state.items.filter(item => item.enabled),
         itemsPending: state.itemsPending,
         itemsError: state.itemsError,
         token: state.token,
